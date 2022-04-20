@@ -1,8 +1,6 @@
 const { json } = require("@remix-run/node")
 
 export const loader = async({request})=>{
-    const url = new URL(request.url);
-    const search =  url.searchParams.get("search")
     const response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${process.env.GIPHY_APP_KEY}&limit=20&offset=0`)
       const responJson = await response.json()
       const { data } = responJson

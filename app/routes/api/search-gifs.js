@@ -4,7 +4,8 @@ export const loader = async({request})=>{
     const urlParams = new URL(request.url)
     const search =  urlParams.searchParams.get("search")
     const offset =  urlParams.searchParams.get("offset")
-    const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_APP_KEY}&q=${search}&limit=10&offset=${offset}&rating=g&lang=en`)
+    const limit =  urlParams.searchParams.get("limit") || 10
+    const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_APP_KEY}&q=${search}&limit=${limit}&offset=${offset}&rating=g&lang=en`)
     const responJson = await response.json()
     const { data } = responJson
     const arrayGifies = data.map(gif=>({    
