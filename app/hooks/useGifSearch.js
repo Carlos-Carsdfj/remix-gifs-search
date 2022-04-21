@@ -80,7 +80,8 @@ const useGifSearch = (initConfig = {},init='') => {
           return () => {
             clearTimeout(handler);
           };
-      },[keyToSearch, config.delay, config.limit, offset])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[keyToSearch, config.delay, config.limit])
       const searchMoreResult = ( ) =>{
           const beginOfSearch = config.limit+1 + offset
         if(keyToSearch.length > 0){
