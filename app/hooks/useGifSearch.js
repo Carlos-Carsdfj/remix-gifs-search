@@ -58,7 +58,7 @@ const useGifSearch = (initConfig = {},init='') => {
         const searcFunction = ()=>{
             if(keyToSearch ===''){
                 dispatch({type:TYPE.FETCH_REQUEST})
-                searchAll().then(res=>{
+                fetch('/api/search-all').then(res=>res.json()).then(res=>{
                     dispatch({type:TYPE.FETCH_SUCCESS, payload:res})    
                 }).catch((err)=>{
                     console.error(err)
@@ -66,7 +66,8 @@ const useGifSearch = (initConfig = {},init='') => {
                 })
             }else{
                 dispatch({type:TYPE.FETCH_REQUEST})
-                    searchGifs({search:keyToSearch, offset, limit:config.limit }).then(res=>{
+                const search = encodeURI(keyToSearch)
+                fetch(`/api/search-gifs?search=${search}&offset=0&limit=${config.limit}`).then(res=>res.json()).then(res=>{    
                     dispatch({type:TYPE.FETCH_SUCCESS, payload:res})    
                     }).catch((err)=>{
                     console.error(err)
@@ -86,7 +87,7 @@ const useGifSearch = (initConfig = {},init='') => {
           const beginOfSearch = config.limit+1 + offset
         if(keyToSearch.length > 0){
             dispatch({type:TYPE.MORE_REQUEST})
-            searchGifs({search:keyToSearch, offset:beginOfSearch}).then(res=>{
+            fetch(`/api/search-gifs?search=${keyToSearch}&offset=${beginOfSearch}`).then(res=>res.json()).then(res=>{
                 dispatch({type:TYPE.MORE_SUCCESS, payload:{results:res, offset: beginOfSearch} })
             }).catch((err)=>{
                 dispatch({type:TYPE.MORE_FAIL, payload:err})
